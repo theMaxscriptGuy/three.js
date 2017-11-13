@@ -1059,13 +1059,28 @@ rollout ThreeJSExporter "ThreeJSExporter"
 
 	on btn_export pressed do
 	(
-		ostream = GetSaveFileStream()
-		if ostream != undefined then
+		_outPath = undefined;
+		_outPath = getSavePath()
+		if( _outPath == undefined)then
 		(
-
+			messageBox "Please select a valid folder
+			return 0
+		)
+		_outPath = undefined;
+		_outPath = getSavePath()
+		if( _outPath == undefined)then
+		(
+			messageBox "Please select a valid folder
+			return 0
+		)
+		--ostream = GetSaveFileStream()
+		_sel = selection as array		
+		for o in _sel do
+		(
+			ostream = createFile (_outPath + "\\" + o.name + ".js")try(
+			select o;
 			ExportScene()
-			close ostream
-
+			close ostream)catch()
 		)
 
 	)
